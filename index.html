@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>G-System — نظام إدارة محلات البلايستيشن والكافيتيريا</title>
+<meta name="description" content="نظام متكامل لإدارة محلات البلايستيشن والكافيتيريا وسيبر الكمبيوتر: جلسات، فواتير، مخزون، موظفين وتقارير.">
+<link rel="icon" href="icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070a10;--card:#0f141d;--card-2:#131a25;--line:#1b2432;
+  --txt:#e9eefb;--muted:#7e8ca3;--accent:#4c9dfb;--accent-2:#7cc0ff;--green:#35d17f;--amber:#ffbe4d;
+  --f:'Cairo',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:var(--f);line-height:1.7;
+  background-image:radial-gradient(1000px 600px at 80% -10%,rgba(76,157,251,.13),transparent 60%),
+                   radial-gradient(700px 500px at 0% 100%,rgba(169,139,255,.07),transparent 60%);
+  background-attachment:fixed}
+a{color:var(--accent);text-decoration:none}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+header{padding:22px 0;border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:12px}
+.mark{width:44px;height:44px;border-radius:13px;background:linear-gradient(160deg,#1a2740,#0d1421);
+  border:1px solid #24568f;display:grid;place-items:center;font-family:var(--mono);font-size:24px;color:var(--accent-2);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 6px 16px -8px var(--accent)}
+.bar b{display:block;font-size:17px;font-weight:900;line-height:1.2}
+.bar em{display:block;font-style:normal;font-size:10px;letter-spacing:.18em;color:var(--muted);font-weight:700}
+.bar .end{margin-inline-start:auto;display:flex;gap:9px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:13px 24px;border-radius:12px;
+  font-weight:800;font-size:15px;background:var(--card-2);border:1px solid var(--line);color:var(--txt);
+  transition:.16s transform,.16s filter;white-space:nowrap}
+.btn:hover{filter:brightness(1.18);transform:translateY(-1px)}
+.btn.primary{background:linear-gradient(180deg,var(--accent-2),var(--accent));color:#04182e;border-color:transparent;
+  box-shadow:0 12px 26px -14px var(--accent)}
+.btn.wa{background:rgba(53,209,127,.13);border-color:rgba(53,209,127,.35);color:#5ee2a0}
+.btn.sm{padding:9px 16px;font-size:13.5px}
+.hero{padding:70px 0 50px;text-align:center}
+.hero h1{font-size:clamp(30px,5vw,50px);font-weight:900;margin:0 0 16px;line-height:1.25}
+.hero h1 span{background:linear-gradient(90deg,var(--accent-2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{font-size:clamp(15px,2vw,18px);color:var(--muted);max-width:640px;margin:0 auto 30px}
+.cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.note{font-size:12.5px;color:var(--muted);margin-top:14px}
+.shot{margin:50px auto 0;max-width:900px;border-radius:16px;border:1px solid var(--line);overflow:hidden;
+  box-shadow:0 40px 80px -40px #000;background:var(--card)}
+.shot img{width:100%;display:block}
+section{padding:56px 0}
+h2{font-size:clamp(22px,3vw,30px);font-weight:900;margin:0 0 10px;text-align:center}
+.sub{text-align:center;color:var(--muted);margin:0 auto 34px;max-width:600px}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(270px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:22px}
+.card i{font-style:normal;font-size:25px;display:block;margin-bottom:10px}
+.card h3{margin:0 0 7px;font-size:16.5px;font-weight:800}
+.card p{margin:0;color:var(--muted);font-size:14px}
+.steps{counter-reset:s;display:grid;gap:14px;max-width:720px;margin:0 auto}
+.step{display:flex;gap:16px;align-items:flex-start;background:var(--card);border:1px solid var(--line);
+  border-radius:14px;padding:18px 20px}
+.step::before{counter-increment:s;content:counter(s);flex:none;width:34px;height:34px;border-radius:11px;
+  background:rgba(76,157,251,.14);border:1px solid rgba(76,157,251,.35);color:var(--accent-2);
+  display:grid;place-items:center;font-weight:900;font-family:var(--mono)}
+.step b{display:block;font-size:15.5px;margin-bottom:3px}
+.step span{color:var(--muted);font-size:14px}
+.warn{background:rgba(255,190,77,.07);border:1px solid rgba(255,190,77,.3);border-radius:14px;padding:20px;max-width:720px;margin:26px auto 0}
+.warn b{color:var(--amber)}
+.warn code{background:var(--card-2);padding:2px 8px;border-radius:6px;font-family:var(--mono);font-size:13px}
+.price{max-width:560px;margin:0 auto;text-align:center}
+.price .box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px}
+.price .num{font-family:var(--mono);font-size:34px;font-weight:800;color:var(--accent-2)}
+.pay{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--card-2);
+  border:1px dashed rgba(76,157,251,.4);border-radius:12px;padding:13px 17px;margin-top:16px;font-weight:700}
+.pay b{font-family:var(--mono);direction:ltr;font-size:16px}
+footer{border-top:1px solid var(--line);padding:26px 0;text-align:center;color:var(--muted);font-size:13px}
+@media(max-width:600px){.bar .end .btn span{display:none}.hero{padding:44px 0 34px}section{padding:40px 0}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <span class="mark">G</span>
+    <span><b>G-System</b><em>SHOP CONTROL</em></span>
+    <span class="end">
+      <a class="btn sm wa" href="https://wa.me/201501440555" target="_blank">واتساب</a>
+      <a class="btn sm primary" href="#download">تحميل البرنامج</a>
+    </span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="hero">
+    <h1>أدِر محلك بالكامل <span>من شاشة واحدة</span></h1>
+    <p>نظام متكامل لمحلات البلايستيشن والكافيتيريا وسيبر الكمبيوتر: جلسات بالوقت،
+       فواتير تلقائية، مخزون، صلاحيات موظفين، وتقارير تعرف منها أرباحك لحظة بلحظة.</p>
+    <div class="cta">
+      <a class="btn primary" href="#download">⬇ تحميل نسخة الويندوز</a>
+    </div>
+    <p class="note">يعمل على الكمبيوتر والتابلت والموبايل · يدعم العربية والإنجليزية</p>
+  </div>
+
+  <section>
+    <h2>ماذا يقدم لك؟</h2>
+    <p class="sub">كل ما يحتاجه صاحب المحل يوميًا، بلا تعقيد.</p>
+    <div class="grid">
+      <div class="card"><i>🎮</i><h3>جلسات بالوقت</h3>
+        <p>افتح جلسة بوقت مفتوح أو محدد، مع مؤقّت حي وتنبيه قبل انتهاء الوقت بخمس دقائق، وحساب أذرع التحكم الإضافية تلقائيًا.</p></div>
+      <div class="card"><i>🧾</i><h3>فواتير تلقائية</h3>
+        <p>الفاتورة تُحسب لحظيًا: وقت اللعب وطلبات الكافيتيريا والخصومات، وتُطبع على الطابعة الحرارية بمقاس 58 أو 80 مم.</p></div>
+      <div class="card"><i>☕</i><h3>كافيتيريا ومخزون</h3>
+        <p>أضف منتجاتك وتصنيفاتك، والكمية تُخصم تلقائيًا مع كل طلب، مع تنبيه عند اقتراب النفاد وإعادة تعبئة بضغطة.</p></div>
+      <div class="card"><i>👥</i><h3>صلاحيات الموظفين</h3>
+        <p>الكاشير يدير الجلسات والطلبات فقط، ولا يرى الأسعار ولا التقارير ولا الإعدادات. تدعوه بكود ينضم به لمحلك.</p></div>
+      <div class="card"><i>🏬</i><h3>أكثر من فرع</h3>
+        <p>لكل فرع أجهزته ومنتجاته وتقاريره المستقلة، وتنتقل بينها من قائمة واحدة أعلى الشاشة.</p></div>
+      <div class="card"><i>📊</i><h3>تقارير حقيقية</h3>
+        <p>إيراد اليوم والأسبوع والشهر، أكثر الأجهزة دخلًا، أكثر المنتجات مبيعًا، وساعات الذروة في محلك.</p></div>
+    </div>
+  </section>
+
+  <section id="download">
+    <h2>حمّل وابدأ</h2>
+    <p class="sub">التثبيت لا يستغرق دقيقة، ولا يحتاج صلاحيات مدير.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://drive.google.com/file/d/1c5iFY1bSbMLo4Q7BcxiN8nYuV0BOZ197/view?usp=drive_link">⬇ تحميل G-System للويندوز</a>
+    </div>
+    <p class="note">النسخة 1.0.0 · ويندوز 10 و11 · 80 ميجابايت</p>
+
+    <div class="warn">
+      <p style="margin:0 0 8px"><b>⚠ رسالة قد تظهر عند التشغيل</b></p>
+      <p style="margin:0;color:var(--muted);font-size:14px">
+        قد يعرض ويندوز رسالة زرقاء مكتوب فيها <code>Windows protected your PC</code>.
+        هذا طبيعي لأن البرنامج جديد ولم يُسجَّل بعد لدى مايكروسوفت، وليس فيروسًا.
+        اضغط <b>More info</b> ثم <b>Run anyway</b> وسيكتمل التثبيت طبيعيًا.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>كيف تبدأ؟</h2>
+    <div class="steps">
+      <div class="step"><div><b>حمّل البرنامج وثبّته</b><span>أو استخدم النسخة الإلكترونية من المتصفح مباشرة بدون تحميل.</span></div></div>
+      <div class="step"><div><b>أنشئ حسابك</b><span>بريد إلكتروني وكلمة مرور، ويصلك رمز تحقق من ستة أرقام.</span></div></div>
+      <div class="step"><div><b>احصل على رخصة التشغيل</b><span>حوّل قيمة الاشتراك عبر InstaPay، وأرسل صورة الإيصال على واتساب، فتصلك الرخصة خلال دقائق.</span></div></div>
+      <div class="step"><div><b>جهّز محلك</b><span>أجهزتك وأسعارها ومنتجاتك في ثلاث خطوات، ثم ابدأ العمل فورًا.</span></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>الاشتراك</h2>
+    <p class="sub">ادفع مرة واحدة عبر InstaPay وتصلك رخصة التشغيل مباشرة.</p>
+    <div class="price">
+      <div class="box">
+        <div class="num">تواصل لمعرفة الأسعار</div>
+        <p style="color:var(--muted);margin:8px 0 0">اشتراك شهري أو ربع سنوي أو رخصة دائمة.</p>
+        <div class="pay"><span>التحويل عبر InstaPay على الرقم</span><b>01501440555</b></div>
+        <a class="btn wa" style="width:100%;margin-top:16px" href="https://wa.me/201501440555?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%A7%D8%B4%D8%AA%D8%B1%D8%A7%D9%83%20%D9%81%D9%8A%20G-System" target="_blank">تواصل عبر واتساب</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    G-System &copy; 2026 — جميع الحقوق محفوظة ·
+    <a href="https://wa.me/201501440555" target="_blank">الدعم الفني</a>
+  </div>
+</footer>
+
+</body>
+</html>
